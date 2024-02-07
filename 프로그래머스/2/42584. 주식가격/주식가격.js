@@ -1,14 +1,16 @@
 function solution(prices) {
-    const answer = [];
-    for (let i = 0; i < prices.length; i++) {
-        let stack = 0;
-        for (let j = i + 1; j < prices.length; j++) {
-            stack++;
-            if (prices[i] > prices[j]) {
-                break;
+    
+    const answer = prices.map((price, index) => {
+        let time = 0
+        
+        for (let j = index + 1; j < prices.length; j++) {
+            time++
+            if (price > prices[j]) {
+                break
             }
         }
-        answer.push(stack);
-    }
-    return answer;
+        return time
+    });
+
+    return answer
 }
