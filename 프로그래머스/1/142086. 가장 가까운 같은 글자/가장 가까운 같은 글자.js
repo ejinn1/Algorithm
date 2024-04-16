@@ -7,7 +7,7 @@ function solution(str) {
             tmp.push(s)
             const r = tmp.indexOf(s)
             tmp[r] = -1
-            return tmp.indexOf(s) - r
+            return tmp.lastIndexOf(s) - r
         } else {
             tmp.push(s)
             return -1
