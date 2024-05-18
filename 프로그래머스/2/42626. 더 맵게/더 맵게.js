@@ -3,19 +3,22 @@ class MinHeap {
         this.heap = []
     }
     
-    size(){
-        return this.heap.length
+    swap(i ,j){
+        [this.heap[i], this.heap[j]] = [this.heap[j], this.heap[i]]
     }
     
     push(value){
         this.heap.push(value)
-        let curIdx = this.heap.length - 1
+        let cur = this.heap.length - 1
         
-        while(curIdx > 0 && this.heap[curIdx] < this.heap[Math.floor((curIdx - 1) / 2)]){
-            const tmp = this.heap[curIdx]
-            this.heap[curIdx] = this.heap[Math.floor((curIdx - 1) / 2)]
-            this.heap[Math.floor((curIdx - 1) / 2)] = tmp
-            curIdx = Math.floor((curIdx - 1) / 2)
+        while(cur > 0){
+            let parent = parseInt((cur-1) / 2)
+            if(this.heap[parent] > this.heap[cur]){
+                this.swap(parent, cur)
+                cur = parent
+            } else {
+                break
+            }
         }
     }
     
@@ -23,47 +26,46 @@ class MinHeap {
         if(this.heap.length === 0) return null
         if(this.heap.length === 1) return this.heap.pop()
         
-        const minValue = this.heap[0]
+        let min = this.heap[0]
         this.heap[0] = this.heap.pop()
-        let curIdx = 0
+        this.heapify(0)
         
-        while(curIdx * 2 + 1 < this.heap.length){
-            let minChildIdx = curIdx * 2 + 2 < this.heap.length && this.heap[curIdx * 2 + 2] < this.heap[curIdx * 2 + 1] ? curIdx * 2 + 2 : curIdx * 2 + 1
-            
-            if(this.heap[curIdx] < this.heap[minChildIdx]){
-                break
-            }
-            
-            const tmp = this.heap[curIdx]
-            this.heap[curIdx] = this.heap[minChildIdx]
-            this.heap[minChildIdx] = tmp
-            curIdx = minChildIdx
-        }
-        
-        return minValue
+        return min
     }
     
-    peek(){
-        return this.heap[0]
+    heapify(index){
+        let small = index
+        let left = index * 2 + 1
+        let right = index * 2 + 2
+        
+        if(left < this.heap.length && this.heap[small] > this.heap[left]){
+            small = left
+        }
+        
+        if(right < this.heap.length && this.heap[small] > this.heap[right]){
+            small = right
+        }
+        
+        if(small !== index){
+            this.swap(small, index)
+            this.heapify(small)
+        }
     }
 }
 
 function solution(scoville, K) {
     const minHeap = new MinHeap()
     
-    for(const sco of scoville){
-        minHeap.push(sco)
-    }
+    scoville.forEach(sco => minHeap.push(sco))
     
-    let cnt = 0
-    
-    while(minHeap.size() >= 2 && minHeap.peek() < K){
+    let res = 0
+    while (minHeap.heap.length > 1 && minHeap.heap[0] < K) {
         const first = minHeap.pop()
         const second = minHeap.pop()
-        const mixedScov = first + second * 2
-        minHeap.push(mixedScov)
-        cnt++
+        
+        minHeap.push(first + 2 * second)
+        res++
     }
     
-    return minHeap.peek() >= K ? cnt : -1
+    return minHeap.heap[0] >= K ? res : -1
 }
