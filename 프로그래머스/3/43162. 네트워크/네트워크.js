@@ -1,22 +1,21 @@
 function solution(n, computers) {
-    
-    let visited = Array.from({length : n}).fill(0)
     let res = 0
-
-    function dfs(visited, node) {
-        visited[node] = 1
-
-        for (let i=0; i<computers[node].length; i++) {
-            if (computers[node][i] && visited[i] === 0) {
-                dfs(visited, i)
+    let visited = Array.from({length: n}).fill(false)
+    
+    function dfs(node){
+        visited[node] = true
+        
+        for(let j=0 ; j<computers[node].length ; j++){
+            if(computers[node][j] === 1 && !visited[j]){
+                dfs(j)
             }
         }
     }
     
-    for (let i=0; i<visited.length; i++) {
-        if (visited[i] !== 1){
+    for(let i=0 ; i<n ; i++){
+        if(!visited[i]){
             res++
-            dfs(visited, i)
+            dfs(i)
         }
     }
     
