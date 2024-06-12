@@ -1,12 +1,12 @@
 // Run by Node.js
 const readline = require('readline');
 
-function solution(H, rains){
+function solution(H, rains, n, m){
 	let rainedHouse = new Set()
 	
 	for(let i=0 ; i<rains.length ; i++){
-		
 		const [a,b] = rains[i]
+		
 		for(let j=a-1 ; j<b ; j++){
 			H[j]++
 			rainedHouse.add(j)
@@ -36,7 +36,7 @@ function solution(H, rains){
 			[n, m] = lines[0].split(' ').map(Number)
 		}
 		
-		if(lines.length === n+2){
+		if(lines.length === m+2){
 			rl.close();
 		}
 	}
@@ -44,7 +44,7 @@ function solution(H, rains){
 	let houseH = lines[1].split(' ').map(Number)
 	let rains = lines.slice(2).map((r) => r.split(' ').map(Number))
 	
-	solution(houseH, rains)
+	solution(houseH, rains, n, m)
 	
 	process.exit();
 })();
