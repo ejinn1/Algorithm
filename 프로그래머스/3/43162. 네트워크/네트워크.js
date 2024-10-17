@@ -1,12 +1,12 @@
 function solution(n, computers) {
-    let res = 0
-    let visited = Array.from({length: n}).fill(false)
+    const visited = Array(n).fill(false)
+    let result = 0
     
-    function dfs(node){
-        visited[node] = true
+    function dfs(i){
+        visited[i] = true
         
-        for(let j=0 ; j<computers[node].length ; j++){
-            if(computers[node][j] === 1 && !visited[j]){
+        for(let j=0 ; j<n ; j++){
+            if(j !== i && computers[i][j] === 1 && !visited[j]){
                 dfs(j)
             }
         }
@@ -14,10 +14,10 @@ function solution(n, computers) {
     
     for(let i=0 ; i<n ; i++){
         if(!visited[i]){
-            res++
             dfs(i)
+            result++
         }
     }
     
-    return res
+    return result
 }
