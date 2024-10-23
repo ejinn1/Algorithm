@@ -1,6 +1,4 @@
 function solution(n, money) {
-    money.sort((a, b) => b - a)
-    
     const dp = Array.from({length: n+1}).fill(0)
     dp[0] = 1
     
@@ -10,6 +8,6 @@ function solution(n, money) {
         }
     }
     
-    return dp[n]
+    return dp[n] % 1000000007
     
 }
