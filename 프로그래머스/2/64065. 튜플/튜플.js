@@ -1,13 +1,14 @@
 function solution(s) {
-    let res = new Set
-    let tmp = s.slice(2, s.length-2).split('},{')
-    tmp = tmp.map((t) => t.split(','))
-    tmp = tmp.sort((a, b) => a.length - b.length)
+    const numMap = new Map()
+    const arr = s.slice(2, -2).split('},{')
     
-    for(let i=0 ; i<tmp.length ; i++){
-        for(let num of tmp[i]){
-            res.add(parseInt(num))
-        }
-    }
-    return [...res]
+    arr.forEach(a => 
+        a.split(',').forEach(num => 
+            numMap.set(num, (numMap.get(num) || 0) + 1)
+        )
+    );
+
+    return [...numMap]
+        .sort((a, b) => b[1] - a[1])
+        .map(([key]) => Number(key))
 }
