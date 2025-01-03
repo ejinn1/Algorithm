@@ -13,8 +13,7 @@ function solution(s) {
 ];
 
     numbers.forEach((num) => {
-        const regex = new RegExp(num[0], 'g');
-        s = s.replace(regex, num[1]);
+        s = s.replaceAll(num[0], num[1]);
     });
     
     return Number(s)

@@ -1,6 +1,6 @@
 # [level 1] 숫자 문자열과 영단어 - 81301 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/81301?language=javascript) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/81301?language=javascript#) 
 
 ### 성능 요약
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2025년 01월 03일 15:20:33
+2025년 01월 03일 15:41:14
 
 ### 문제 설명
 
