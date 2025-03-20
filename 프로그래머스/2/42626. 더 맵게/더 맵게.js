@@ -3,7 +3,7 @@ class MinHeap {
         this.heap = []
     }
     
-    swap(i ,j){
+    swap(i, j){
         [this.heap[i], this.heap[j]] = [this.heap[j], this.heap[i]]
     }
     
@@ -11,10 +11,10 @@ class MinHeap {
         this.heap.push(value)
         let cur = this.heap.length - 1
         
-        while(cur > 0){
+        while(cur > 0) {
             let parent = parseInt((cur-1) / 2)
-            if(this.heap[parent] > this.heap[cur]){
-                this.swap(parent, cur)
+            if(this.heap[cur] < this.heap[parent]){
+                this.swap(cur, parent)
                 cur = parent
             } else {
                 break
@@ -31,6 +31,7 @@ class MinHeap {
         this.heapify(0)
         
         return min
+        
     }
     
     heapify(index){
@@ -38,16 +39,18 @@ class MinHeap {
         let left = index * 2 + 1
         let right = index * 2 + 2
         
+
         if(left < this.heap.length && this.heap[small] > this.heap[left]){
             small = left
         }
-        
+
         if(right < this.heap.length && this.heap[small] > this.heap[right]){
             small = right
         }
         
-        if(small !== index){
-            this.swap(small, index)
+        
+        if(index !== small){
+            this.swap(index, small)
             this.heapify(small)
         }
     }
@@ -56,14 +59,14 @@ class MinHeap {
 function solution(scoville, K) {
     const minHeap = new MinHeap()
     
-    scoville.forEach(sco => minHeap.push(sco))
+    scoville.forEach((sco) => minHeap.push(sco))
     
     let res = 0
-    while (minHeap.heap.length > 1 && minHeap.heap[0] < K) {
+    while(minHeap.heap.length > 1 && minHeap.heap[0] < K){
         const first = minHeap.pop()
         const second = minHeap.pop()
-        
-        minHeap.push(first + 2 * second)
+    
+        minHeap.push(first + second * 2)
         res++
     }
     
