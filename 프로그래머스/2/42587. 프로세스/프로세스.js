@@ -1,24 +1,22 @@
 function solution(priorities, location) {
-    let answer = 0
-    let arr = []
-    let maxValue = Math.max(...priorities)
-    
-    for(let i = 0; i < priorities.length; i++){
-        arr.push(i);
-    }
-    
-    while(priorities.length !== 0){
-        maxValue = Math.max(...priorities)
+    let res = 0
+    let max = 9
+    let position = Array.from({length: priorities.length}, (_, i) => i)
+
+    while(priorities.length > 0){
+        max = Math.max(...priorities)
         
-        if(priorities[0] < maxValue){
+        if(priorities[0] < max){
             priorities.push(priorities.shift())
-            arr.push(arr.shift())
+            position.push(position.shift())
         } else {
-            answer+=1
             priorities.shift()
-            if(arr.shift() == location){
-                return answer
+            res++
+            if(position.shift() === location){
+                return res
             }
         }
     }
+    
+    return res
 }
