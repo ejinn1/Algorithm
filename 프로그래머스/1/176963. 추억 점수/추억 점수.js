@@ -1,18 +1,20 @@
 function solution(name, yearning, photo) {
-    const result = photo.map((sads) => {
+    const pointMap = new Map()
+    for(let i=0 ; i<name.length ; i++){
+        pointMap.set(name[i], yearning[i])
+    }
+    
+    const result = []
+    for(let i=0 ; i<photo.length ; i++){
+        const names = photo[i]
         let sum = 0
-        const idxs = sads.map((sad) => {
-            return name.indexOf(sad)
-        })
+        for(let j=0 ; j<names.length ; j++){
+            const point = pointMap.get(names[j]) || 0
+            sum += point
+        }
         
-        idxs.map((idx) => {
-            if(idx !== -1){
-                sum += yearning[idx]
-            }
-        })
-        
-        return sum
-    })
+        result.push(sum)
+    }
     
     return result
 }
