@@ -1,12 +1,12 @@
 function solution(k, m, score) {
-    score = score.sort((a, b) => b-a)
+    score = score.sort((a, b) => b - a)
     
+    let idx = 0
     let sum = 0
-    for(let i=0 ; i<score.length ; i+=m){
-        const box = score.slice(i,i+m)
-        if(box[m-1]){
-            sum += box[m-1] * m
-        }   
+    for(let i=0 ; i<Math.floor(score.length / m) ; i++){
+        const apples = score.slice(idx, idx+m)
+        sum += Math.min(...apples) * m
+        idx += m
     }
     
     return sum
