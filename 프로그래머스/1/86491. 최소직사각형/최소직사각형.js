@@ -1,14 +1,15 @@
 function solution(sizes) {
-    
-    let maxW = 0
-    let maxH = 0
-    
-    sizes.forEach((size) => {
-        const [w, h] = size[0] < size[1] ? [size[1] , size[0]] : [size[0] , size[1]]
+    for(let i=0 ; i<sizes.length ; i++){
+        const [w, h] = sizes[i]
         
-        maxW = Math.max(maxW, w)
-        maxH = Math.max(maxH, h)
-    })
-        
-    return maxW * maxH   
+        if(w > h){
+            sizes[i] = [h, w]
+        }
+    }
+    
+    const minW = Math.max(...sizes.map(([w, h]) => w))
+    const minH = Math.max(...sizes.map(([w, h]) => h))
+    
+    return minW * minH
+    
 }
