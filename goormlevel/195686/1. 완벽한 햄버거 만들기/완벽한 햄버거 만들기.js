@@ -3,38 +3,43 @@ let rl = readline.createInterface({
 	input: process.stdin,
 	output: process.stdout,
 });
-let input = []
-let n = null
+let lines = []
 rl.on('line', (line) => {
-	input.push(line)
-	if(input.length === 1) n = Number(input[0])
-	if(input.length === 2) rl.close();
+	lines.push(line)
+	if(lines.length === 2){
+		rl.close();	
+	}
 });
 
 rl.on('close', () => {
-	let nums = input[1].split(' ').map(Number)
-	let max = Math.max(...nums)
-	let maxIdx = nums.indexOf(max)
-	let front = nums.slice(0, maxIdx)
-	let back = nums.slice(maxIdx)
-	let sum = nums.reduce((acc, cur) => {
-		return acc += cur
-	}, 0)
-	let valid = true;
-  for (let i = 1; i <= maxIdx; i++) {
-    if (nums[i] < nums[i - 1]) {
-        valid = false;
-        	break;
-        }
-    }
-
-    for (let i = maxIdx + 1; i < n; i++) {
-        if (nums[i] > nums[i - 1]) {
-            valid = false;
-            break;
-        }
-    }
-		
 	
-	console.log(valid ? sum : 0)
+	const N = lines[0]
+	const nums = lines[1].split(" ").map(Number)
+	const max = Math.max(...nums)
+	
+	let isUp = true
+	let result = 0
+	for(let i=0 ; i<nums.length-1; i++){
+		if(nums[i] === max){
+			isUp = false
+		}
+		if(isUp && nums[i] > nums[i+1]){
+			result = 0
+			break
+		} else if(!isUp && nums[i] < nums[i+1]){
+			result = 0
+			break
+		} else {
+			result += nums[i]
+		}
+	}
+
+	if(result !== 0 && nums.length !== 1){
+		result += nums[nums.length - 1]
+	} else if(nums.length === 1){
+		result = nums[0]
+	}
+
+	console.log(result)
+	
 })
