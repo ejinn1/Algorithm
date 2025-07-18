@@ -4,60 +4,61 @@ let rl = readline.createInterface({
 	output: process.stdout,
 });
 
-function solution(land, bomb){
-	
-	const n = land.length
-	const m = land[0].length
-	let score = Array.from({length: n}, () => Array.from({length: m}).fill(0))
-	const direction = [[0,0], [1,0], [-1,0], [0,1], [0,-1]]
-	
-	for(let [x, y] of bomb){
-		x-=1
-		y-=1
-		for(let [dx, dy] of direction){
-			let cx = x + dx
-			let cy = y + dy
-			
-			if(cx >= 0 && cx < n && cy >= 0 && cy < m && land[cx][cy] !== '#'){
-				let add = 0
-				if(land[cx][cy] === '0'){
-					add = 1
-				} else if (land[cx][cy] === '@'){
-					add = 2
-				}
-				
-				score[cx][cy] += add
-			}
-		}
-	}
-	let res = 0
-	for(let i=0 ; i<n ; i++){
-		res = Math.max(res, ...score[i])
-	}
-	return res
-}
+let lines = []
+let N = null
+let K = null
 
-let input = [];
-let n = null
-let k = null
 rl.on('line', (line) => {
-	input.push(line)
-	if(input.length === 1){
-		[n, k] = input[0].split(' ').map(Number)
+	lines.push(line)
+	if(lines.length === 1){
+		[N, K] = lines[0].split(" ").map(Number)
+		
 	}
-	if(input.length === n+k+1){
-		let land = input.slice(1, n+1).map((l) => l.split(' '))
-		let bomb = input.slice(n+1, n+k+1).map((b) => b.split(' ').map(Number))
 
-		let res = solution(land, bomb)
-		console.log(res)
-		
-		
+	if(lines.length === N + K + 1){
 		rl.close();
 	}
-	
 });
 
 rl.on('close', () => {
-	process.exit(0)
+
+	const grounds = lines.slice(1, N+1).map((i) => i.split(" "))
+	const bombs = lines.slice(N+1, N+K+1).map((i) => i.split(" ").map(Number))
+	const points = Array.from({length: N}, () => Array(N).fill(0))
+
+	const dx = [0, 1, 0, -1]
+	const dy = [1, 0, -1, 0]
+	bombs.forEach(([x, y]) => {
+		// check
+		const option = grounds[x-1][y-1]
+		if(option === '@'){
+			points[x-1][y-1] += 2
+		} else if(option === '0'){
+			points[x-1][y-1] += 1
+		}
+		for(let i=0 ; i<4 ; i++){
+			const cx = x - 1 + dx[i]
+			const cy = y - 1+ dy[i]
+
+			if(cx >= 0 && cx < N && cy >= 0 && cy < N){
+				// check
+				const option = grounds[cx][cy]
+				if(option === '@'){
+					points[cx][cy] += 2
+				} else if(option === '0'){
+					points[cx][cy] += 1
+				}
+			}
+		}
+	})
+
+	let max = 0
+	for(let i=0 ; i<N ; i++){
+		for(let j=0 ; j<N ; j++){
+			if(points[i][j] > max) max = points[i][j]
+		}
+	}
+
+	console.log(max)
+	
 })
