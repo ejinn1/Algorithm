@@ -13,23 +13,23 @@ public class Main {
             graph[i] = new ArrayList<>();
         }
 
-        for(int i=0 ; i<N-1 ; i++){
-            int A = sc.nextInt();
-            int B = sc.nextInt();
-            int C = sc.nextInt();
+        for (int i = 0; i < N - 1; i++) {
+            int a = sc.nextInt();
+            int b = sc.nextInt();
+            int c = sc.nextInt();
 
-            graph[A].add(new long[]{B, C});
-            graph[B].add(new long[]{A, C});
+            graph[a].add(new long[]{b, c});
+            graph[b].add(new long[]{a, c});
         }
 
         boolean[] visited = new boolean[N + 1];
-        Deque<long[]> queue = new ArrayDeque<>();
-        queue.add(new long[]{1, 0});
+        Deque<long[]> deque = new ArrayDeque<>();
+        deque.add(new long[]{1, 0});
         visited[1] = true;
 
         long maxDist = 0;
-        while (!queue.isEmpty()) {
-            long[] cur = queue.poll();
+        while (!deque.isEmpty()) {
+            long[] cur = deque.poll();
             int u = (int) cur[0];
             long d = cur[1];
             if(d > maxDist) maxDist = d;
@@ -39,9 +39,10 @@ public class Main {
                 long w = nx[1];
                 if (!visited[v]) {
                     visited[v] = true;
-                    queue.add(new long[]{v, d + w});
+                    deque.add(new long[]{v, d + w});
                 }
             }
+
         }
 
         System.out.println(maxDist);
