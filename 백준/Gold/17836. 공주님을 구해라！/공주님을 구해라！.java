@@ -1,5 +1,4 @@
 
-
 import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -30,26 +29,29 @@ public class Main {
             }
         }
 
-        int normal = bfs(0, 0, N-1, M-1);
+        int normal = dfs(0, 0, N - 1, M - 1);
 
-        int swordDist = bfs(0, 0, swordX, swordY);
+        int withSword = dfs(0, 0, swordX, swordY);
 
         int viaSword = -1;
-        if (swordDist != -1) {
-            viaSword = swordDist + (N-1 - swordX) + (M-1 - swordY);
+        if (withSword != -1) {
+            viaSword = withSword + (N - 1 - swordX) + (M - 1 - swordY);
         }
 
         int ans = Integer.MAX_VALUE;
-        if (normal != -1) ans = Math.min(ans, normal);
-        if (viaSword != -1) ans = Math.min(ans, viaSword);
+        if(normal != -1) ans = normal;
+        if(viaSword != -1) ans = Math.min(ans, viaSword);
 
-        if (ans <= T) System.out.println(ans);
-        else System.out.println("Fail");
+        if (ans <= T) {
+            System.out.println(ans);
+        } else {
+            System.out.println("Fail");
+        }
     }
 
-    static int bfs(int x, int y, int targetX, int targetY) {
+    static int dfs(int x, int y, int targetX, int targetY) {
         dist = new int[N][M];
-        for(int[] row : dist) Arrays.fill(row, -1);
+        for(int[] row: dist) Arrays.fill(row, -1);
 
         ArrayDeque<int[]> q = new ArrayDeque<>();
         q.add(new int[]{x, y});
@@ -60,7 +62,7 @@ public class Main {
             int cx = cur[0];
             int cy = cur[1];
 
-            if (cx == targetX && cy == targetY) {
+            if(cx == targetX && cy == targetY){
                 return dist[cx][cy];
             }
 
@@ -70,7 +72,7 @@ public class Main {
 
                 if(nx < 0 || nx >= N || ny < 0 || ny >= M) continue;
                 if(dist[nx][ny] != -1) continue;
-                if(castle[nx][ny] == 1 ) continue;
+                if(castle[nx][ny] == 1) continue;
 
                 dist[nx][ny] = dist[cx][cy] + 1;
                 q.add(new int[]{nx, ny});
