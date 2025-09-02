@@ -1,22 +1,16 @@
 
 
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.Scanner;
 
 public class Main {
-  static int N, M;
-  static int[][] arr;
-  static int[][] dist;
-  static int[] dx = {0, 0, -1, 1};
-  static int[] dy = {1, -1, 0, 0};
-
   public static void main(String[] args) {
     Scanner sc = new Scanner(System.in);
 
-    N = sc.nextInt();
-    M = sc.nextInt();
+    int N = sc.nextInt();
+    int M = sc.nextInt();
 
-    arr = new int[N][M];
-
+    int[][] arr = new int[N][M];
     for (int i = 0; i < N; i++) {
       String line = sc.next();
       for (int j = 0; j < M; j++) {
@@ -24,41 +18,43 @@ public class Main {
       }
     }
 
-    System.out.println(bfs(0, 0));
-  }
 
-  static int bfs(int x, int y){
-    dist = new int[N][M];
-    boolean[][] visited = new boolean[N][M];
     ArrayDeque<int[]> q = new ArrayDeque<>();
+    boolean[][] visited = new boolean[N][M];
+    int[][] dist = new int[N][M];
+    int[] dx = {0, 0, 1, -1};
+    int[] dy = {1, -1, 0, 0};
+    int result = -1;
 
-    visited[x][y] = true;
-    dist[x][y] = 1;
-    q.add(new int[]{x, y});
+    q.add(new int[]{0, 0});
+    visited[0][0] = true;
+    dist[0][0] = 1;
 
     while (!q.isEmpty()) {
       int[] cur = q.poll();
-      int cx = cur[0];
-      int cy = cur[1];
+      int x = cur[0];
+      int y = cur[1];
 
-      if (cx == N - 1 && cy == M - 1) {
-        return dist[cx][cy];
+      if (x == N - 1 && y == M - 1) {
+        result = dist[x][y];
+        break;
       }
 
       for (int d = 0; d < 4; d++) {
-        int nx = cx + dx[d];
-        int ny = cy + dy[d];
+        int cx = x + dx[d];
+        int cy = y + dy[d];
 
-        if(nx < 0 || nx >= N || ny < 0 || ny >= M) continue;
-        if(arr[nx][ny] == 0) continue;
-        if(visited[nx][ny]) continue;
+        if(cx < 0 || cx >= N || cy < 0 || cy >= M) continue;
+        if(arr[cx][cy] == 0) continue;
+        if(visited[cx][cy]) continue;
 
-        visited[nx][ny] = true;
-        dist[nx][ny] = dist[cx][cy] + 1;
-        q.add(new int[]{nx, ny});
+        visited[cx][cy] = true;
+        dist[cx][cy] = dist[x][y] + 1;
+        q.add(new int[]{cx, cy});
       }
     }
 
-    return -1;
+
+    System.out.println(result);
   }
 }
