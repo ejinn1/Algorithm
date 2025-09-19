@@ -3,21 +3,11 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.PriorityQueue;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Main {
-  static class Edge {
-    int to, w;
-
-    Edge(int to, int w) {
-      this.to = to;
-      this.w = w;
-    }
-  }
   public static void main(String[] args) throws IOException {
+    // 플루이드-워셜
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     StringTokenizer st;
 
@@ -25,8 +15,11 @@ public class Main {
     int V = Integer.parseInt(st.nextToken());
     int E = Integer.parseInt(st.nextToken());
 
-    List<Edge>[] graph = new ArrayList[V + 1];
-    for (int i = 1; i <= V; i++) graph[i] = new ArrayList<>();
+    int[][] dist = new int[V + 1][V + 1];
+    for (int i = 1; i <= V; i++) {
+      Arrays.fill(dist[i], Integer.MAX_VALUE);
+      dist[i][i] = 0;
+    }
 
     for (int i = 0; i < E; i++) {
       st = new StringTokenizer(br.readLine());
@@ -34,55 +27,31 @@ public class Main {
       int v = Integer.parseInt(st.nextToken());
       int w = Integer.parseInt(st.nextToken());
 
-      graph[u].add(new Edge(v, w));
+      if(w < dist[u][v]) dist[u][v] = w;
     }
 
-    int[][] dist = new int[V + 1][V + 1];
-    for (int i = 1; i <= V; i++) {
-      for (int j = 1; j <= V; j++) {
-        dist[i][j] = Integer.MAX_VALUE;
-      }
-    }
-
-    for (int i = 1; i <= V; i++) {
-      PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[1] - b[1]);
-      pq.offer(new int[]{i, 0});
-      dist[i][i] = 0;
-
-      while (!pq.isEmpty()) {
-        int[] cur = pq.poll();
-        int node = cur[0];
-        int weight = cur[1];
-        if(dist[i][node] != weight) continue;
-
-        for (Edge next : graph[node]) {
-          int nw = next.w + weight;
-          if (dist[i][next.to] > nw) {
-            dist[i][next.to] = nw;
-            pq.offer(new int[]{next.to, nw});
-          }
+    for (int k = 1; k <= V; k++) {
+      for (int i = 1; i <= V; i++) {
+        if(dist[i][k] == Integer.MAX_VALUE) continue;
+        for (int j = 1; j <= V; j++) {
+          if(dist[k][j] == Integer.MAX_VALUE) continue;
+          int nd = dist[i][k] + dist[k][j];
+          if(nd < dist[i][j]) dist[i][j] = nd;
         }
       }
     }
 
-    int min = Integer.MAX_VALUE;
+    int ans = Integer.MAX_VALUE;
     for (int i = 1; i <= V; i++) {
-      for (int j = 1; j <= V; j++) {
-        int go = dist[i][j];
-        int back = dist[j][i];
-        if(go == Integer.MAX_VALUE || go == -1 || go == 0) continue;
-        if(back == Integer.MAX_VALUE || back == -1 || back == 0) continue;
-
-        min = Math.min(min, go + back);
-
+      for (int j = i + 1; j <= V; j++) {
+        if (dist[i][j] != Integer.MAX_VALUE && dist[j][i] != Integer.MAX_VALUE) {
+          int sum = dist[i][j] + dist[j][i];
+          if (sum < ans) ans = sum;
+        }
       }
     }
 
-    System.out.println(min == Integer.MAX_VALUE ? -1 : min);
-    
-
-
+    System.out.println(ans == Integer.MAX_VALUE ? -1 : ans);
 
   }
-
 }
