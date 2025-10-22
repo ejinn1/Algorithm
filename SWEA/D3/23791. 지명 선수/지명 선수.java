@@ -57,40 +57,43 @@ class Solution
 
 		for(int test_case = 1; test_case <= T; test_case++)
 		{
-		int N = sc.nextInt();
+		
+			int N = sc.nextInt();
       int[] A = new int[N + 1];
       int[] B = new int[N + 1];
 
       for (int i = 1; i <= N; i++) A[i] = sc.nextInt();
       for (int i = 1; i <= N; i++) B[i] = sc.nextInt();
 
-      boolean[] picked = new boolean[N + 1];
-      char[] players = new char[N + 1];
+
+      boolean turnA = true;
+      boolean[] checked = new boolean[N + 1];
       int ia = 1;
       int ib = 1;
-      boolean turnA = true;
+      char[] result = new char[N + 1];
 
       for (int t = 0; t < N; t++) {
         if (turnA) {
-          while(picked[A[ia]]) ia++;
+          while(checked[A[ia]]) ia++;
           int pick = A[ia];
-          picked[pick] = true;
-          players[pick] = 'A';
+          checked[pick] = true;
+          result[pick] = 'A';
         } else {
-          while(picked[B[ib]]) ib++;
+          while(checked[B[ib]]) ib++;
           int pick = B[ib];
-          picked[pick] = true;
-          players[pick] = 'B';
+          checked[pick] = true;
+          result[pick] = 'B';
         }
         turnA = !turnA;
       }
 
       StringBuilder sb = new StringBuilder();
       for (int i = 1; i <= N; i++) {
-        sb.append(players[i]);
+        sb.append(result[i]);
       }
 
       System.out.println(sb);
+      
 
 		}
 	}
