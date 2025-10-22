@@ -58,32 +58,29 @@ class Solution
 
 		for(int test_case = 1; test_case <= T; test_case++)
 		{
-		
-			char[] str = sc.nextLine()
+		char[] str = sc.nextLine()
               .toCharArray();
 
-      // L
-      int cur = 0;
+      int min = 0;
       int max = 0;
+      int res = 0;
       for (int i = 0; i < str.length; i++) {
-        if(str[i] == 'L') cur--;
-        else if(str[i] == 'R') cur++;
-        else cur--;
+        if (str[i] == 'L') {
+          min--;
+          max--;
+        } else if (str[i] == 'R') {
+          min++;
+          max++;
+        } else{
+          min--;
+          max++;
+        }
 
-        max = Math.max(max, Math.abs(cur));
+        res = Math.max(res, Math.max(Math.abs(min), Math.abs(max)));
       }
 
-      // R
-      cur = 0;
-      for (int i = 0; i < str.length; i++) {
-        if(str[i] == 'L') cur--;
-        else if(str[i] == 'R') cur++;
-        else cur++;
-
-        max = Math.max(max, Math.abs(cur));
-      }
-
-      System.out.println(max);
+      
+      System.out.println(res);
 
 		}
 	}
