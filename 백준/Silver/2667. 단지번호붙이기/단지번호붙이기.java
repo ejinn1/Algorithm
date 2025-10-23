@@ -1,55 +1,56 @@
-
-
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
 
 public class Main {
   static int N;
-  static int[][] arr;
+  static int[][] map;
   static boolean[][] visited;
-  static int[] dx = {0, 0, 1, -1};
-  static int[] dy = {1, -1, 0, 0};
+  static int[] dx = new int[]{1, -1, 0, 0};
+  static int[] dy = new int[]{0, 0, 1, -1};
 
-  public static void main(String[] args) {
-    Scanner sc = new Scanner(System.in);
+  public static void main(String[] args) throws IOException {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-    N = sc.nextInt();
-    arr = new int[N][N];
+    N = Integer.parseInt(br.readLine());
+    map = new int[N][N];
 
     for (int i = 0; i < N; i++) {
-      String line = sc.next();
+      String line = br.readLine();
       for (int j = 0; j < N; j++) {
-        arr[i][j] = line.charAt(j) - '0';
+        map[i][j] = line.charAt(j) - '0';
       }
     }
 
-    visited = new boolean[N][N];
     List<Integer> sizes = new ArrayList<>();
-    
+    visited = new boolean[N][N];
+    int result = 0;
     for (int i = 0; i < N; i++) {
       for (int j = 0; j < N; j++) {
-        if (arr[i][j] == 1 && !visited[i][j]) {
+        if (!visited[i][j] && map[i][j] == 1) {
           sizes.add(dfs(i, j));
+          result++;
         }
       }
     }
 
+    System.out.println(result);
     Collections.sort(sizes);
-    System.out.println(sizes.size());
     for(int s: sizes) System.out.println(s);
   }
 
   static int dfs(int x, int y) {
     visited[x][y] = true;
     int cnt = 1;
-    
+
     for (int d = 0; d < 4; d++) {
       int cx = x + dx[d];
       int cy = y + dy[d];
 
       if(cx < 0 || cx >= N || cy < 0 || cy >= N) continue;
-      if(arr[cx][cy] == 0) continue;
-      if(visited[cx][cy]) continue;
-
+      if (visited[cx][cy]) continue;
+      if (map[cx][cy] != 1) continue;
       cnt += dfs(cx, cy);
     }
 
