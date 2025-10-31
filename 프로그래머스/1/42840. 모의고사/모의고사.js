@@ -4,24 +4,23 @@ function solution(answers) {
         [2,1,2,3,2,4,2,5],
         [3,3,1,1,2,2,4,4,5,5]
     ]
-    let scores = [0,0,0]
     
-    answers.forEach((answer, i) => {
-        patterns.forEach((pattern, j) => {
-            if(answer === pattern[i % pattern.length]){
-                scores[j]++
+    let cnts = [0,0,0]
+    for(let i=0 ; i<answers.length ; i++){
+        const ans = answers[i]
+        for(let j=0 ; j<patterns.length ; j++){
+            const p = patterns[j][i % patterns[j].length]
+            if(p === ans){
+                cnts[j]++
             }
-        })
-    })
-    
-    const maxScore = Math.max(...scores)
-    const result = scores.reduce((acc, score, i) => {
-        if(score === maxScore){
-            acc.push(i+1)
         }
-        return acc
-    },[])
+    }
     
-    return result
+    const max = Math.max(...cnts)
+    const result = []
+    for(let i=0 ; i<3 ; i++){
+        if(cnts[i] === max) result.push(i+1)
+    }
     
+    return result.sort((a, b) => a - b)
 }
