@@ -1,0 +1,16 @@
+-- 코드를 입력하세요
+SELECT
+    ins.ANIMAL_ID,
+    ins.ANIMAL_TYPE,
+    ins.NAME
+FROM (
+    SELECT * FROM ANIMAL_INS
+    WHERE SEX_UPON_INTAKE LIKE 'Intact%'
+) ins
+JOIN (
+    SELECT * FROM ANIMAL_OUTS
+    WHERE SEX_UPON_OUTCOME LIKE 'Neutered%'
+        OR SEX_UPON_OUTCOME LIKE 'Spayed%'
+) outs
+ON ins.ANIMAL_ID = outs.ANIMAL_ID
+ORDER BY ins.ANIMAL_ID
