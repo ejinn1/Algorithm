@@ -1,19 +1,20 @@
 function solution(numbers, target) {
- 
-    let res = 0
-    function dfs(idx, sum){
-        if(idx === numbers.length && sum === target){
-            res++
+    
+    let result = 0
+    function dfs(i, sum){
+        if(i === numbers.length && sum === target){
+            result++
             return
-        } else if(idx === numbers.length && sum !== target){
+        } else if(i === numbers.length && sum !== target){
             return
         }
         
-        dfs(idx + 1, sum + numbers[idx])
-        dfs(idx + 1, sum - numbers[idx])
+        dfs(i+1, sum + numbers[i])
+        dfs(i+1, sum - numbers[i])
     }
     
     dfs(0, 0)
     
-    return res
+    return result
+    
 }
