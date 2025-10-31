@@ -1,0 +1,7 @@
+-- 코드를 작성해주세요
+SELECT
+    tree.ITEM_ID,
+    ITEM_NAME
+FROM ITEM_TREE tree
+JOIN ITEM_INFO info ON tree.ITEM_ID = info.ITEM_ID
+WHERE PARENT_ITEM_ID IS NULL
