@@ -1,27 +1,28 @@
 function solution(maps) {
+    const N = maps.length
+    const M = maps[0].length
     
-    const n = maps.length
-    const m = maps[0].length
-    
-    const directions = [[1,0], [-1,0], [0,1], [0,-1]]
-    let queue = []
-    queue.push([0,0,1])
-    let visited = Array.from({length: n}, () => Array.from({length: m}).fill(0))
-    visited[0][0] = 1
+    const queue = [[0, 0, 1]]
+    const visited = Array.from({length: N}, () => Array(M).fill(false))
+    const dx = [0, 0, 1, -1]
+    const dy = [1, -1, 0, 0]
     
     while(queue.length > 0){
-        let [x,y,move] = queue.shift()
+        const [x, y, cnt] = queue.shift()
         
-        if(x === n-1 && y === m-1) return move
+        if(visited[x][y]) continue
+        visited[x][y] = true
         
-        for(let [dx, dy] of directions){
-            let cx = x + dx
-            let cy = y + dy
+        if(x === N-1 && y === M-1) return cnt
+        
+        for(let d=0 ; d<4 ; d++){
+            const cx = x + dx[d]
+            const cy = y + dy[d]
             
-            if(cx >= 0 && cx < n && cy >= 0 && cy < m && maps[cx][cy] === 1 && visited[cx][cy] === 0){
-                visited[cx][cy] = 1
-                queue.push([cx, cy, move + 1])
-            }
+            if(cx < 0 || cx >= N || cy < 0 || cy >= M) continue
+            if(visited[cx][cy]) continue
+            if(maps[cx][cy] === 0) continue
+            queue.push([cx, cy, cnt+1])
         }
     }
     
