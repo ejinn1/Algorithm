@@ -1,21 +1,12 @@
 import java.util.Scanner;
 
 public class Main {
-  static class Edge {
-    int v, w;
-
-    public Edge(int v, int w) {
-      this.v = v;
-      this.w = w;
-    }
-  }
-
   public static void main(String[] args) {
     Scanner sc = new Scanner(System.in);
 
     int N = sc.nextInt();
-    int[] dist = new int[N - 1];
-    int[] costs = new int[N];
+    long[] dist = new long[N - 1];
+    long[] costs = new long[N];
 
     for (int i = 0; i < N - 1; i++) {
       dist[i] = sc.nextInt();
@@ -24,8 +15,8 @@ public class Main {
       costs[i] = sc.nextInt();
     }
 
-    int minPrice = Integer.MAX_VALUE;
-    int total = 0;
+    long minPrice = Integer.MAX_VALUE;
+    long total = 0;
     for (int i = 0; i < N - 1; i++) {
       minPrice = Math.min(minPrice, costs[i]);
       total += minPrice * dist[i];
