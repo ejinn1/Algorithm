@@ -58,7 +58,8 @@ class Solution
 		for(int test_case = 1; test_case <= T; test_case++)
 		{
 		
-int N = sc.nextInt();
+		 int N = sc.nextInt();
+
       int[] buildings = new int[N];
 
       for (int i = 0; i < N; i++) {
@@ -66,17 +67,12 @@ int N = sc.nextInt();
       }
 
       int result = 0;
-      int i = 2;
-      while (i < N - 2) {
+      for (int i = 2; i < N - 2; i++) {
         int leftMax = Math.max(buildings[i - 2], buildings[i - 1]);
-        int curH = buildings[i];
         int rightMax = Math.max(buildings[i + 2], buildings[i + 1]);
 
-        if (curH > leftMax && curH > rightMax) {
-          result += curH - Math.max(leftMax, rightMax);
-          i += 2;
-        } else {
-          i++;
+        if (buildings[i] >= leftMax && buildings[i] >= rightMax ) {
+          result += (buildings[i] - Math.max(leftMax, rightMax));
         }
       }
 
