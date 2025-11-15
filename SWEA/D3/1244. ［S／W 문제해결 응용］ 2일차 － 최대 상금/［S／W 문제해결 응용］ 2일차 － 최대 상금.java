@@ -25,9 +25,9 @@
 //System.out.println(var);		       				   // 문자열 1개 출력하는 예제
 //System.out.println(AB);		       				     // long 변수 1개 출력하는 예제
 /////////////////////////////////////////////////////////////////////////////////////////////
-import java.util.Scanner;
-import java.io.FileInputStream;
 import java.util.*;
+import java.io.FileInputStream;
+
 /*
    사용하는 클래스명이 Solution 이어야 하므로, 가급적 Solution.java 를 사용할 것을 권장합니다.
    이러한 상황에서도 동일하게 java Solution 명령으로 프로그램을 수행해볼 수 있습니다.
@@ -58,39 +58,39 @@ class Solution
 		for(int test_case = 1; test_case <= T; test_case++)
 		{
 		
-			String numsStr = sc.next();
+			
+             String num = String.valueOf(sc.nextInt());
       int K = sc.nextInt();
-      int[] nums = new int[numsStr.length()];
-      for (int i = 0; i < numsStr.length(); i++) {
-        nums[i] = numsStr.charAt(i) - '0';
-      }
 
-      Set<String>[] dp = new HashSet[K + 1];
+      Set<String>[] dp = new Set[K + 1];
       for (int i = 0; i <= K; i++) {
         dp[i] = new HashSet<>();
       }
-
-      dp[0].add(numsStr);
+      dp[0].add(num);
+      int N = num.length();
 
       for (int cnt = 1; cnt <= K; cnt++) {
-        for (String cur : dp[cnt - 1]) {
-          char[] a = cur.toCharArray();
-          for (int i = 0; i < nums.length - 1; i++) {
-            for (int j = i + 1; j < nums.length; j++) {
-              char tmp = a[i];
-              a[i] = a[j];
-              a[j] = tmp;
-              dp[cnt].add(new String(a));
-              a[j] = a[i];
-              a[i] = tmp;
+        for (String str : dp[cnt - 1]) {
+          char[] nums = str.toCharArray();
+          for (int i = 0; i < N - 1; i++) {
+            for (int j = i + 1; j < N; j++) {
+              char tmp = nums[i];
+              nums[i] = nums[j];
+              nums[j] = tmp;
+              dp[cnt].add(String.valueOf(nums));
+              nums[j] = nums[i];
+              nums[i] = tmp;
             }
           }
         }
       }
 
-      System.out.println("#" + test_case + " " + dp[K].stream()
-              .max(String::compareTo)
-              .orElse(numsStr));
+      int max = Integer.MIN_VALUE;
+      for (String n : dp[K]) {
+        max = Math.max(max, Integer.parseInt(n));
+      }
+
+      System.out.println("#" + test_case + " " + max);
 
 		}
 	}
