@@ -58,33 +58,26 @@ class Solution
 		for(int test_case = 1; test_case <= T; test_case++)
 		{
 		
-int dump = sc.nextInt();
+			
+      
+            int K = sc.nextInt();
+      int N = 100;
 
-      Deque<Integer> boxes = new ArrayDeque<>();
-      for (int i = 0; i < 100; i++) {
-        boxes.add(sc.nextInt());
+      int[] boxes = new int[N];
+      for (int i = 0; i < N; i++) {
+        boxes[i] = sc.nextInt();
       }
-
-      for (int d = 0; d < dump; d++) {
-        List<Integer> sorted = new LinkedList<>(boxes);
-        Collections.sort(sorted);
-        boxes = new ArrayDeque<>(sorted);
-
-        int min = boxes.pollFirst() + 1;
-        int max = boxes.pollLast() - 1;
-
-        boxes.add(min);
-        boxes.add(max);
+      
+      for (int i = 0; i < K; i++) {
+        Arrays.sort(boxes);
+        boxes[0]++;
+        boxes[boxes.length - 1]--;
       }
+            
+            Arrays.sort(boxes);
 
-      List<Integer> sorted = new LinkedList<>(boxes);
-      Collections.sort(sorted);
-      boxes = new ArrayDeque<>(sorted);
+      System.out.println("#" + test_case + " " + (boxes[boxes.length - 1] - boxes[0]));
 
-      int min = boxes.pollFirst();
-      int max = boxes.pollLast();
-
-      System.out.println("#" + test_case + " " + (max - min));
 
 		}
 	}
