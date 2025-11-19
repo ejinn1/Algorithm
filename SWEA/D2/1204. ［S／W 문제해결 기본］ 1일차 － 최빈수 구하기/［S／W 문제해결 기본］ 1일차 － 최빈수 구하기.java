@@ -25,7 +25,7 @@
 //System.out.println(var);		       				   // 문자열 1개 출력하는 예제
 //System.out.println(AB);		       				     // long 변수 1개 출력하는 예제
 /////////////////////////////////////////////////////////////////////////////////////////////
-import java.util.Scanner;
+import java.util.*;
 import java.io.FileInputStream;
 
 /*
@@ -58,25 +58,35 @@ class Solution
 		for(int test_case = 1; test_case <= T; test_case++)
 		{
 		
-			int[] scores = new int[101];
+		
+            int testNum = sc.nextInt();
+      int N = 1000;
 
-      sc.nextInt();
-
-      for (int i = 0; i < 1000; i++) {
+      Map<Integer, Integer> scoreMap = new HashMap<>();
+      
+      for (int i = 0; i < N; i++) {
         int score = sc.nextInt();
-        scores[score]++;
-      }
 
-      int max = 0;
-      int maxS = 1;
-      for (int i = 1; i <= 100; i++) {
-        if (scores[i] >= max) {
-          max = scores[i];
-          maxS = i;
+        if (scoreMap.containsKey(score)) {
+          scoreMap.put(score, scoreMap.get(score) + 1);
+        } else {
+          scoreMap.put(score, 1);
         }
       }
 
-      System.out.println("#" + test_case + " " + maxS);
+      int maxCnt = 0;
+      int maxScore = 0;
+      for (int i = 0; i <= 100; i++) {
+        if (scoreMap.containsKey(i)) {
+          int cnt = scoreMap.get(i);
+          if(cnt >= maxCnt){
+            maxCnt = cnt;
+            maxScore = i;
+          }
+        }
+      }
+
+      System.out.println("#" + testNum + " " + maxScore);
 		}
 	}
 }
