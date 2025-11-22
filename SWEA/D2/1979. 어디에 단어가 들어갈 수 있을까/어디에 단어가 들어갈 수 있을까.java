@@ -69,41 +69,32 @@ class Solution
         }
       }
 
-      int[] dx = new int[]{1, 0};
-      int[] dy = new int[]{0, 1};
-
       int result = 0;
+
       for (int i = 0; i < N; i++) {
+        int cnt = 0;
         for (int j = 0; j < N; j++) {
-          if(puzzle[i][j] != 1) continue;
-
-          for (int d = 0; d < 2; d++) {
-            int cnt = 1;
-            int x = i;
-            int y = j;
-
-            int cx = x - dx[d];
-            int cy = y - dy[d];
-            if (cx >= 0 && cx < N && cy >= 0 && cy < N && puzzle[cx][cy] == 1) continue;
-
-            while (true) {
-              int nx = x + dx[d];
-              int ny = y + dy[d];
-
-              if (nx < 0 || nx >= N || ny < 0 || ny >= N) break;
-              if (puzzle[nx][ny] != 1) break;
-              x = nx;
-              y = ny;
-              cnt++;
-            }
-
-            if (cnt == K) {
-              result++;
-            }
-          }
+          if(puzzle[i][j] == 1) cnt++;
+          else if (puzzle[i][j] == 0 && cnt == K) {
+            result++;
+            cnt = 0;
+          } else cnt = 0;
         }
+        if(cnt == K) result++;
       }
 
+      for (int j = 0; j < N; j++) {
+        int cnt = 0;
+        for (int i = 0; i < N; i++) {
+          if(puzzle[i][j] == 1) cnt++;
+          else if (puzzle[i][j] == 0 && cnt == K) {
+            result++;
+            cnt = 0;
+          } else cnt = 0;
+        }
+        if(cnt == K) result++;
+      }
+      
       System.out.println("#" + test_case + " " + result);
 
 		}
