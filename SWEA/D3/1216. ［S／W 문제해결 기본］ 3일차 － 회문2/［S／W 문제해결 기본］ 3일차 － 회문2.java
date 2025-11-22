@@ -58,55 +58,56 @@ class Solution
 		for(int test_case = 1; test_case <= T; test_case++)
 		{
 		
-	int test_num = sc.nextInt();
-      sc.nextLine();
-      int N = 100;
-
-      char[][] board = new char[N][N];
-      for (int i = 0; i < N; i++) {
-        String line = sc.nextLine();
-        for (int j = 0; j < N; j++) {
-          board[i][j] = line.charAt(j);
-        }
-      }
-
-      int result = 1;
-      outer:
-      for (int L = N; L >= 1; L--) {
-        for (int r = 0; r < N; r++) {
-          for (int s = 0; s + L <= N; s++) {
-            boolean ok = true;
-            for (int k = 0; k < L / 2; k++) {
-              if (board[r][s + k] != board[r][s + L - 1 - k]) {
-                ok = false;
-                break;
-              }
-            }
-            if(ok){
-              result = L;
-              break outer;
-            }
-          }
-        }
-
-        for (int c = 0; c < N; c++) {
-          for (int s = 0; s + L < N; s++) {
-            boolean ok = true;
-            for (int k = 0; k < L / 2; k++) {
-              if (board[s + k][c] != board[s + L - 1 - k][c]) {
-                ok = false;
-                break;
-              }
-            }
-            if (ok) {
-              result = L;
-              break outer;
-            }
-          }
-        }
-      }
-
-      System.out.println("#" + test_num + " " + result);
+			int testNum = sc.nextInt();
+	    	sc.nextLine();
+	    	int N = 100;
+	    	
+	    	char[][] arr = new char[N][N];
+	    	for(int i=0 ; i<N ; i++) {
+	    		String line = sc.nextLine();
+	    		for(int j=0 ; j<N ; j++) {
+	    			arr[i][j] = line.charAt(j);
+	    		}
+	    	}
+	    	
+	    	int result = 0;
+	    	
+	    	outer:
+	    	for(int L = N ; L >= 1 ; L--) {
+	    		for(int r=0 ; r<N ; r++) {
+	    			for(int s=0 ; s+L <= N ; s++) {
+	    				boolean ok = true;
+	    				for(int k=0 ; k<L/2 ; k++) {
+	    					if(arr[r][s+k] != arr[r][s+L-k-1]) {
+	    						ok = false;
+	    						break;
+	    					}
+	    				}
+	    				if(ok) {
+		    				result = L;
+		    				break outer;
+		    			}
+	    			}
+	    		}
+	    		
+	    		for(int c=0 ; c<N ; c++) {
+	    			for(int s=0 ; s+L <= N ; s++) {
+	    				boolean ok = true;
+	    				for(int k=0 ; k<L/2 ; k++) {
+	    					if(arr[s+k][c] != arr[s+L-k-1][c]) {
+	    						ok = false;
+	    						break;
+	    					}
+	    				}
+	    				if(ok) {
+		    				result = L;
+		    				break outer;
+		    			}
+	    			}
+	    		}
+	    	}
+	    	
+	    	System.out.println("#" + testNum + " " + result);
 
 		}
 	}
