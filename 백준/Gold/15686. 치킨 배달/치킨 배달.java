@@ -38,11 +38,11 @@ public class Main {
       }
     }
 
+
     selected = new boolean[C];
     dfs(0, 0);
 
     System.out.println(res);
-
   }
 
   static void dfs(int idx, int picked) {
