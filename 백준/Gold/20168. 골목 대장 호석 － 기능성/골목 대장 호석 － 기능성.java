@@ -31,6 +31,7 @@ public class Main {
 
 
     visited = new boolean[N + 1];
+    visited[A] = true;
     dfs(A, 0, 0);
 
     System.out.println(maxW == Integer.MAX_VALUE ? -1 : maxW);
@@ -43,10 +44,7 @@ public class Main {
     }
 
     if (idx == B) {
-      if (maxW > max) {
-        maxW = max;
-      }
-
+      maxW = Math.min(maxW, max);
       return;
     }
 
@@ -55,9 +53,10 @@ public class Main {
       int w = next[1];
 
       if (visited[v]) continue;
-      if(w > max) max = w;
+      
+      int newMax = Math.max(max, w);
       visited[v] = true;
-      dfs(v, sum + w, max);
+      dfs(v, sum + w, newMax);
       visited[v] = false;
     }
   }
