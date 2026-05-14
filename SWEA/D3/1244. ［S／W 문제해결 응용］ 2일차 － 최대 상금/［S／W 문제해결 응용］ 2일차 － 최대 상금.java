@@ -34,6 +34,11 @@ import java.io.FileInputStream;
  */
 class Solution
 {
+    static int result;
+  static int k;
+  static char[] numbers;
+  static Set<String>[] visited;
+    
 	public static void main(String args[]) throws Exception
 	{
 		/*
@@ -58,40 +63,47 @@ class Solution
 		for(int test_case = 1; test_case <= T; test_case++)
 		{
 		
-			
-             String num = String.valueOf(sc.nextInt());
-      int K = sc.nextInt();
 
-      Set<String>[] dp = new Set[K + 1];
-      for (int i = 0; i <= K; i++) {
-        dp[i] = new HashSet<>();
+            numbers = sc.next().toCharArray();
+      k = sc.nextInt();
+
+      visited = new HashSet[k + 1];
+
+      for (int i = 0; i <= k; i++) {
+        visited[i] = new HashSet<>();
       }
-      dp[0].add(num);
-      int N = num.length();
+result = 0;
+      dfs(0);
 
-      for (int cnt = 1; cnt <= K; cnt++) {
-        for (String str : dp[cnt - 1]) {
-          char[] nums = str.toCharArray();
-          for (int i = 0; i < N - 1; i++) {
-            for (int j = i + 1; j < N; j++) {
-              char tmp = nums[i];
-              nums[i] = nums[j];
-              nums[j] = tmp;
-              dp[cnt].add(String.valueOf(nums));
-              nums[j] = nums[i];
-              nums[i] = tmp;
-            }
-          }
-        }
-      }
-
-      int max = Integer.MIN_VALUE;
-      for (String n : dp[K]) {
-        max = Math.max(max, Integer.parseInt(n));
-      }
-
-      System.out.println("#" + test_case + " " + max);
+      System.out.println("#" + test_case + " " + result);
 
 		}
 	}
+    static void dfs(int count) {
+    String current = new String(numbers);
+
+    if (visited[count].contains(current)) {
+      return;
+    }
+
+    visited[count].add(current);
+
+    if (count == k) {
+      result = Math.max(result, Integer.parseInt(current));
+      return;
+    }
+
+    for (int i = 0; i < numbers.length - 1; i++) {
+      for (int j = i + 1; j < numbers.length; j++) {
+        swap(i, j);
+        dfs(count + 1);
+        swap(i, j);
+      }
+    }
+  }
+      static void swap(int i, int j) {
+    char temp = numbers[i];
+    numbers[i] = numbers[j];
+    numbers[j] = temp;
+  }
 }
