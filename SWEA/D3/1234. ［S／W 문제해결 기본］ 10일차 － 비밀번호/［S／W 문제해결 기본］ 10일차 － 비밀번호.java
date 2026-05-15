@@ -27,7 +27,6 @@
 /////////////////////////////////////////////////////////////////////////////////////////////
 import java.util.*;
 import java.io.FileInputStream;
-import java.util.stream.Collectors;
 
 /*
    사용하는 클래스명이 Solution 이어야 하므로, 가급적 Solution.java 를 사용할 것을 권장합니다.
@@ -59,25 +58,30 @@ class Solution
 		for(int test_case = 1; test_case <= T; test_case++)
 		{
 		
-		String[] inputs = sc.nextLine().split(" ");
-      int N = Integer.parseInt(inputs[0]);
-      char[] nums = inputs[1].toCharArray();
+
+            int n = sc.nextInt();
+      char[] password = sc.next().toCharArray();
 
       Stack<Character> stack = new Stack<>();
 
-      for (int i = 0; i < N; i++) {
-        if(stack.isEmpty()) stack.push(nums[i]);
-        else if (stack.peek() == nums[i]) {
-          stack.pop();
-        } else {
-          stack.push(nums[i]);
+      for (char p : password) {
+        if (stack.isEmpty()) {
+          stack.push(p);
+          continue;
+        }
+
+        char top = stack.pop();
+        if (top != p) {
+          stack.push(top);
+          stack.push(p);
         }
       }
 
-
-      System.out.println("#" + test_case + " " + stack.stream()
-              .map(String::valueOf)
-              .collect(Collectors.joining()));
+      StringBuilder sb = new StringBuilder();
+      for (char s : stack) {
+        sb.append(s);
+      }
+      System.out.println("#" + test_case + " " + sb);
 
 		}
 	}
