@@ -51,7 +51,25 @@ class Solution
 		Scanner sc = new Scanner(System.in);
 		int T;
 		T=sc.nextInt();
+        
         sc.nextLine();
+
+    Map<String, Integer> numMap = new HashMap<>();
+    numMap.put("ZRO", 0);
+    numMap.put("ONE", 1);
+    numMap.put("TWO", 2);
+    numMap.put("THR", 3);
+    numMap.put("FOR", 4);
+    numMap.put("FIV", 5);
+    numMap.put("SIX", 6);
+    numMap.put("SVN", 7);
+    numMap.put("EGT", 8);
+    numMap.put("NIN", 9);
+
+    String[] numbers = {
+            "ZRO", "ONE", "TWO", "THR", "FOR",
+            "FIV", "SIX", "SVN", "EGT", "NIN"
+    };
 		/*
 		   여러 개의 테스트 케이스가 주어지므로, 각각을 처리합니다.
 		*/
@@ -60,38 +78,25 @@ class Solution
 		{
 		
 
-            Map<String, Integer> numMap = new HashMap<>();
-     numMap.put("ZRO", 0);
-      numMap.put("ONE", 1);
-      numMap.put("TWO", 2);
-      numMap.put("THR", 3);
-      numMap.put("FOR", 4);
-      numMap.put("FIV", 5);
-      numMap.put("SIX", 6);
-      numMap.put("SVN", 7);
-      numMap.put("EGT", 8);
-      numMap.put("NIN", 9);
+            
+            String[] input = sc.nextLine().split(" ");
+      int len = Integer.parseInt(input[1]);
 
-      String[] inputs = sc.nextLine()
-              .split(" ");
-
-      String testCase = inputs[0];
-      int C = Integer.parseInt(inputs[1]);
-
-      String[] nums = sc.nextLine()
-              .split(" ");
-
-      Arrays.sort(nums, Comparator.comparingInt(numMap::get));
-
-      StringBuilder sb = new StringBuilder();
-      sb.append(testCase)
-              .append('\n');
-
-      for (String num : nums) {
-        sb.append(num)
-                .append(" ");
+      String[] strs = sc.nextLine().split(" ");
+      int[] cnt = new int[10];
+      for (int i = 0; i < len; i++) {
+        String str = strs[i];
+        cnt[numMap.get(str)]++;
       }
 
+      StringBuilder sb = new StringBuilder();
+      for (int i = 0; i < 10; i++) {
+        for (int j = 0; j < cnt[i]; j++) {
+          sb.append(numbers[i]).append(" ");
+        }
+      }
+
+                  System.out.println("#" + test_case + " ");
       System.out.println(sb);
 
 		}
