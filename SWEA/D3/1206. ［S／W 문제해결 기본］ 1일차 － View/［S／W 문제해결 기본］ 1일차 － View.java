@@ -25,7 +25,7 @@
 //System.out.println(var);		       				   // 문자열 1개 출력하는 예제
 //System.out.println(AB);		       				     // long 변수 1개 출력하는 예제
 /////////////////////////////////////////////////////////////////////////////////////////////
-import java.util.Scanner;
+import java.util.*;
 import java.io.FileInputStream;
 
 /*
@@ -58,25 +58,25 @@ class Solution
 		for(int test_case = 1; test_case <= T; test_case++)
 		{
 		
-		 int N = sc.nextInt();
 
-      int[] buildings = new int[N];
-
-      for (int i = 0; i < N; i++) {
-        buildings[i] = sc.nextInt();
+            int n = sc.nextInt();
+      int[] b = new int[n];
+      for (int i = 0; i < n; i++) {
+        b[i] = sc.nextInt();
       }
 
-      int result = 0;
-      for (int i = 2; i < N - 2; i++) {
-        int leftMax = Math.max(buildings[i - 2], buildings[i - 1]);
-        int rightMax = Math.max(buildings[i + 2], buildings[i + 1]);
-
-        if (buildings[i] >= leftMax && buildings[i] >= rightMax ) {
-          result += (buildings[i] - Math.max(leftMax, rightMax));
+      int sum = 0;
+      for (int i = 2; i < n - 2; i++) {
+        int cur = b[i];
+        if (b[i - 2] <= cur && b[i - 1] <= cur && b[i + 1] <= cur && b[i + 2] <= cur) {
+          int leftM = Math.max(b[i - 2], b[i - 1]);
+          int rightM = Math.max(b[i + 1], b[i + 2]);
+          int m = Math.max(leftM, rightM);
+          sum += cur - m;
         }
       }
 
-      System.out.println("#" + test_case + " " + result);
+      System.out.println("#" + test_case + " " + sum);
 
 		}
 	}
