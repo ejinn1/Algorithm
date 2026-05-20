@@ -25,7 +25,7 @@
 //System.out.println(var);		       				   // 문자열 1개 출력하는 예제
 //System.out.println(AB);		       				     // long 변수 1개 출력하는 예제
 /////////////////////////////////////////////////////////////////////////////////////////////
-import java.util.Scanner;
+import java.util.*;
 import java.io.FileInputStream;
 
 /*
@@ -57,31 +57,23 @@ class Solution
 		for(int test_case = 1; test_case <= T; test_case++)
 		{
 		
-            
-             int N = sc.nextInt();
-      sc.nextLine();
 
-      int[][] arr = new int[N][N];
-
-      for (int i = 0; i < N; i++) {
-        String[] line = sc.nextLine().split(" ");
-        for (int j = 0; j < N; j++) {
-          arr[i][j] = Integer.parseInt(line[j]);
+            int n = sc.nextInt();
+      int[][] table = new int[n][n];
+      for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+          table[i][j] = sc.nextInt();
         }
       }
 
-      // 2는 위로
-      // 1은 아래로
-
       int cnt = 0;
-      for (int j = 0; j < N; j++) {
-        // 1 2 쌍이 있으면 +
-        boolean isDeadStart = false;
-        for (int i = 0; i < N; i++) {
-          if (arr[i][j] == 1) {
-            isDeadStart = true;
-          } else if (arr[i][j] == 2 && isDeadStart) {
-            isDeadStart = false;
+      for (int j = 0; j < n; j++) {
+        boolean k = false;
+        for (int i = 0; i < n; i++) {
+          if (table[i][j] == 1) {
+            k = true;
+          } else if (table[i][j] == 2  && k) {
+            k = false;
             cnt++;
           }
         }
