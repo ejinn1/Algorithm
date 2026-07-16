@@ -1,0 +1,66 @@
+import java.util.*;
+
+public class Main {
+    static int N, K, U, D;
+    static int[][] arr;
+    static boolean[][] visited;
+    static int[] dx = new int[]{0, 0, 1, -1};
+    static int[] dy = new int[]{1, -1, 0, 0};
+    
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        N = sc.nextInt();
+        K = sc.nextInt();
+        U = sc.nextInt();
+        D = sc.nextInt();
+
+        arr = new int[N][N];
+        for(int i=0 ; i<N ; i++){
+            for(int j=0 ; j<N ; j++){
+                arr[i][j] = sc.nextInt();
+            }
+        }
+
+        visited = new boolean[N][N];
+
+        List<Integer> cntSize = new ArrayList<>();
+
+        for(int i=0 ; i<N ; i++){
+            for(int j=0 ; j<N ; j++){
+                if(visited[i][j]) continue;
+                visited[i][j] = true;
+                int cnt = bfs(i, j);
+
+                cntSize.add(cnt);
+            }
+        }
+
+        cntSize.sort(Collections.reverseOrder());
+        int ans = 0;
+
+        for(int i=0 ; i<K && i<cntSize.size() ; i++){
+            ans += cntSize.get(i);
+        }
+
+        System.out.print(ans);
+    }
+
+    static int bfs(int x, int y){
+        int c = 1;
+        
+        for(int d=0 ; d<4 ; d++){
+            int nx = x + dx[d];
+            int ny = y + dy[d];
+
+            if(nx < 0 || nx >= N || ny < 0 || ny >= N) continue;
+            if(visited[nx][ny]) continue;
+            if(Math.abs(arr[nx][ny] - arr[x][y]) < U || Math.abs(arr[nx][ny] - arr[x][y]) > D) continue;
+
+            visited[nx][ny] = true;
+            c += bfs(nx, ny);
+        }
+
+        return c;
+    }
+}
