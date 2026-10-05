@@ -1,10 +1,10 @@
 # [level 3] 카테고리 별 도서 판매량 집계하기 - 144855 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/144855#qna) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/144855) 
 
 ### 성능 요약
 
-메모리: 0.0 MB, 시간: 0.00 ms
+메모리: undefined, 시간: 
 
 ### 구분
 
@@ -12,11 +12,11 @@
 
 ### 채점결과
 
-Empty
+합계: 100.0 / 100.0
 
 ### 제출 일자
 
-2024년 10월 19일 16:09:02
+2026년 10월 05일 14:30:35
 
 ### 문제 설명
 
