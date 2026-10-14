@@ -1,7 +1,13 @@
-select a.author_id, a.author_name, b.category, sum(sales*price) as total_sales
-from book as b
-join book_sales as bs on b.book_id = bs.book_id
-join author as a on b.author_id = a.author_id
-where year(bs.sales_date) = '2022' and month(bs.sales_date) = '1'
-group by a.author_id, b.category
-order by a.author_id asc, b.category desc
+SELECT a.AUTHOR_ID, a.AUTHOR_NAME, b.CATEGORY, SUM(b.PRICE * bs.AMOUNT) AS TOTAL_SALES
+FROM BOOK b
+INNER JOIN AUTHOR a
+    ON b.AUTHOR_ID = a.AUTHOR_ID
+LEFT JOIN (
+    SELECT BOOK_ID, SUM(SALES) AS AMOUNT
+    FROM BOOK_SALES
+    WHERE YEAR(SALES_DATE) = '2022' AND MONTH(SALES_DATE) = '1'
+    GROUP BY BOOK_ID
+) as bs
+    ON b.BOOK_ID = bs.BOOK_ID
+GROUP BY a.AUTHOR_ID, b.CATEGORY
+ORDER BY a.AUTHOR_ID, b.CATEGORY DESC
