@@ -9,7 +9,8 @@ public class Main {
             arr[i] = sc.nextInt();
         
         int[] dp = new int[n];
-        for(int i=0 ; i<n ; i++) dp[i] = 1;
+        // for(int i=0 ; i<n ; i++) dp[i] = 1;
+        Arrays.fill(dp, 1);
         
         for(int i=0 ; i<n-1 ; i++){
             for(int j=i+1 ; j<n ; j++){
