@@ -36,9 +36,7 @@ public class Main {
 
             int next = dfs(j);
 
-            if (next != -1) {
-                cnt = Math.max(cnt, next + 1);
-            }
+            cnt = Math.max(cnt, next + 1);
         }
 
         return dp[cur] = cnt;
