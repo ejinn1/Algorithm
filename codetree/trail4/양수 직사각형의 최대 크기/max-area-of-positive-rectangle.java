@@ -17,34 +17,35 @@ public class Main {
             }
         }
 
-        int answer = -1;
+        int ans = -1;
 
         // 직사각형의 위쪽, 아래쪽, 왼쪽, 오른쪽 경계를 정한다.
         for (int top = 0; top < n; top++) {
             for (int bottom = top; bottom < n; bottom++) {
                 for (int left = 0; left < m; left++) {
                     for (int right = left; right < m; right++) {
-                        if (isAllPositive(top, bottom, left, right)) {
-                            int height = bottom - top + 1;
-                            int width = right - left + 1;
-                            answer = Math.max(answer, height * width);
+                        if(isAllPositive(top, bottom, left, right)){
+                            int h = bottom - top + 1;
+                            int w = right - left + 1;
+                            ans = Math.max(ans, h * w);
                         }
                     }
                 }
             }
         }
 
-        System.out.println(answer);
+        System.out.println(ans);
     }
 
-    static boolean isAllPositive(int top, int bottom, int left, int right) {
-        for (int i = top; i <= bottom; i++) {
-            for (int j = left; j <= right; j++) {
-                if (grid[i][j] <= 0) {
+    static boolean isAllPositive(int top, int bottom, int left, int right){
+        for(int i=top ; i<=bottom ; i++){
+            for(int j=left ; j<=right ; j++){
+                if(grid[i][j] <= 0){
                     return false;
                 }
             }
         }
+
         return true;
     }
 }
